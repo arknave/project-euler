@@ -24,5 +24,5 @@ instr = '''
 instr = instr.replace('\n', '')
 ans = 0
 for i in range(0, len(instr)):
-    ans = max(ans, reduce(lambda x, y: x*y, map(int, instr[i:i+5])))
+    ans = max(ans, reduce(lambda x, y: x*y, map(int, instr[i:i+13])))
 print ans
