@@ -1,5 +1,8 @@
 object ProjectEuler4 {
-  def isPalindrome(x: Int) = x.toString == x.toString.reverse
+  def isPalindrome(x: Int) = {
+    val s = x.toString
+    s == s.reverse
+  }
 
   def palindromeGenerator(from: Int, to: Int) =
     for (i <- from until to; 
