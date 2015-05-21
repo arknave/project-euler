@@ -1,7 +1,8 @@
 object ProjectEuler6 {
   def ss(from: Int, to: Int) = {
     val range = (from to to)
-    range.sum * range.sum - range.map(x => x*x).sum
+    val sum = range.sum
+    sum * sum - range.map(x => x*x).sum
   }
 
   def main(args: Array[String]) = {
