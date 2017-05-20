@@ -31,7 +31,8 @@ def phi(n, sieve):
     return ans
 
 def main():
-    CAP = 1000000 + 1
+    #CAP = 1000000 + 1
+    CAP = 12000 + 1
     s = gen_sieve(CAP)
 
     ans = sum(phi(n, s) for n in range(2, CAP))
