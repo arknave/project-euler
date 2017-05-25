@@ -1,3 +1,4 @@
+MEMO_CAP = 900
 memo = {1: False, 89: True}
 
 def sqdigit(n):
@@ -10,7 +11,7 @@ def sqdigit(n):
     return ans
 
 def ends_eighty_nine(n):
-    if n in memo:
+    if n < MEMO_CAP and n in memo:
         return memo[n]
 
     stack = [n]
@@ -19,9 +20,10 @@ def ends_eighty_nine(n):
 
     ans = memo[stack[-1]]
     for x in stack:
-        memo[x] = ans
+        if x < MEMO_CAP:
+            memo[x] = ans
 
-    return memo[n]
+    return ans
 
 def main():
     ans = 0
