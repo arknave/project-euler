@@ -1,8 +1,9 @@
 def count(l, w):
     ans = 0
     for lp in range(1, l + 1):
-        for wp in range(1, w + 1):
-            ans += (l - lp + 1) * (w - wp + 1)
+        coeff = (l - lp + 1)
+        row = w * (w + 1) // 2
+        ans += coeff * row
 
     return ans
 
