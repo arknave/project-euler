@@ -3,8 +3,8 @@ def is_pal(n):
 
 maxx = 0
 
-for i in xrange(1001):
-    for j in xrange(1001):
-        if is_pal(i*j):
-            maxx = max(maxx, i*j)
-print maxx
+for i in range(1001):
+    for j in range(1001):
+        if is_pal(i * j):
+            maxx = max(maxx, i * j)
+print(maxx)

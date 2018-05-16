@@ -1,7 +1,7 @@
 from math import ceil, sqrt
 
 def is_prime(n):
-    for i in range(3, int(ceil(sqrt(n)))+1, 2):
+    for i in range(3, int(ceil(sqrt(n))) + 1, 2):
         if n % i == 0:
             return False
     return True
@@ -13,4 +13,4 @@ while num <= 10000:
     if is_prime(test):
         num += 1
 
-print test
+print(test)
