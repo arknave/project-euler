@@ -24,10 +24,11 @@ def main():
             for c in range(1, 5):
                 for d in range(1, 5):
                     n = 1
+                    num_div = 1
                     for p, e in zip(primes, [a, b, c, d]):
                         n *= (p**e)
+                        num_div *= 2 * e + 1
 
-                    num_div = (2 * a + 1) * (2 * b + 1) * (2 * c + 1) * (2 * d + 1)
                     ptr = 4
                     while ptr < len(primes) and num_div < goal:
                         n *= primes[ptr]
