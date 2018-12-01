@@ -1,3 +1,7 @@
-My solutions to project euler in various languages. Inside each language folder are the challenges
+# Project Euler
 
-The Hackerrank Folder has solutions to https://www.hackerrank.com/contests/projecteuler/challenges
+My alias on [Project Euler](https://projecteuler.net) is arknave.
+
+These are my solutions to Project Euler in various languages. Inside each language folder are the solutions.
+
+The HackerRank Folder has solutions to [Project Euler+](https://www.hackerrank.com/contests/projecteuler/challenges)
