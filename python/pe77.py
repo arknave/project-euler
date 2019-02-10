@@ -1,5 +1,5 @@
 def gen_primes(n):
-    # returns a lit of primes
+    # returns a list of primes
     sieve = list(range(n))
 
     primes = [2]
