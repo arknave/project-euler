@@ -1,0 +1,70 @@
+from collections import defaultdict
+
+def solve(n):
+    if n % 2 == 1:
+        return 0
+
+    # state: 2 bits for the past n cells
+    # 0 - is that cell filled?
+    # 1 - did the ant in that cell go right?
+    # 2 - did the ant in that cell go down?
+    FILL = 0x1
+    RIGHT = 0x2
+    DOWN = 0x4
+
+    dp = defaultdict(int)
+    dp[0] = 1
+
+    ALL_BITS = (1 << (3 * n)) - 1
+
+    for r in range(n):
+        for c in range(n):
+            print(r, c, len(dp))
+            ndp = defaultdict(int)
+
+            for state, freq in dp.items():
+                before = state & 0x7
+                up = state >> (3 * (n - 1)) & 0x7
+                upright = state >> (3 * (n - 2)) & 0x7
+                entered = ((before & RIGHT) > 0) or ((up & DOWN) > 0)
+
+                # print("rc {} {} state {:06b} before {:03b} up {:03b} upright {:03b} entered {}".format(r, c, state, before, up, upright, entered))
+
+                new_state = ((state << 3) | (FILL if entered else 0)) & ALL_BITS
+
+                # if the above cell has not been entered, then we have to enter it
+                # otherwise, we cannot go up.
+                if r > 0 and (up & FILL) == 0:
+                    if (up & DOWN) == 0:
+                        # print("can go up")
+                        ndp[new_state] += freq
+
+                    continue
+
+                # can almost always go down
+                if r + 1 < n:
+                    # print("can go down {:06b}".format(new_state | DOWN))
+                    ndp[new_state | DOWN] += freq
+
+                # try going left
+                if c > 0 and (before & FILL) == 0 and (before & RIGHT) == 0:
+                    # print("can go left")
+                    ndp[new_state | (FILL << 3)] += freq
+
+                # try going right
+                if c + 1 < n and (r == 0 or (upright & DOWN) == 0):
+                    # print("can go right")
+                    ndp[new_state | RIGHT] += freq
+
+            dp = ndp
+
+    return sum(v for v in dp.values())
+
+
+def main():
+    ans = solve(10)
+    print(ans)
+
+
+if __name__ == "__main__":
+    main()
