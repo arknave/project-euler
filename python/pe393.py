@@ -1,13 +1,14 @@
 from collections import defaultdict
 
+
 def solve(n):
     if n % 2 == 1:
         return 0
 
-    # state: 2 bits for the past n cells
-    # 0 - is that cell filled?
-    # 1 - did the ant in that cell go right?
-    # 2 - did the ant in that cell go down?
+    # state: 3 bits for the past n cells
+    # bit 0 - is that cell filled?
+    # bit 1 - did the ant in that cell go right?
+    # bit 2 - did the ant in that cell go down?
     FILL = 0x1
     RIGHT = 0x2
     DOWN = 0x4
@@ -15,20 +16,19 @@ def solve(n):
     dp = defaultdict(int)
     dp[0] = 1
 
+    WORD = FILL | RIGHT | DOWN
     ALL_BITS = (1 << (3 * n)) - 1
 
     for r in range(n):
         for c in range(n):
-            print(r, c, len(dp))
+            # print(r, c, len(dp))
             ndp = defaultdict(int)
 
             for state, freq in dp.items():
-                before = state & 0x7
-                up = state >> (3 * (n - 1)) & 0x7
-                upright = state >> (3 * (n - 2)) & 0x7
+                before = state & WORD
+                up = state >> (3 * (n - 1)) & WORD
+                upright = state >> (3 * (n - 2)) & WORD
                 entered = ((before & RIGHT) > 0) or ((up & DOWN) > 0)
-
-                # print("rc {} {} state {:06b} before {:03b} up {:03b} upright {:03b} entered {}".format(r, c, state, before, up, upright, entered))
 
                 new_state = ((state << 3) | (FILL if entered else 0)) & ALL_BITS
 
@@ -41,19 +41,20 @@ def solve(n):
 
                     continue
 
-                # can almost always go down
-                if r + 1 < n:
-                    # print("can go down {:06b}".format(new_state | DOWN))
-                    ndp[new_state | DOWN] += freq
-
                 # try going left
                 if c > 0 and (before & FILL) == 0 and (before & RIGHT) == 0:
-                    # print("can go left")
                     ndp[new_state | (FILL << 3)] += freq
+
+                    if (before & DOWN) > 0:
+                        # if the previous ant moves down and the cell is not filled, we have to go left
+                        continue
+
+                # can almost always go down
+                if r + 1 < n:
+                    ndp[new_state | DOWN] += freq
 
                 # try going right
                 if c + 1 < n and (r == 0 or (upright & DOWN) == 0):
-                    # print("can go right")
                     ndp[new_state | RIGHT] += freq
 
             dp = ndp
